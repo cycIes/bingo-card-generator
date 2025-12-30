@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingo Generator</title>
+    <link href="style.css" rel="stylesheet">
+    <script src="index.js"></script>
+</head>
+<body>
+    <h1>Bingo Card Generator</h1>
+    <form id="options">
+        <label for="title">Title of your card:</label><br>
+        <input type="text" name="title"><br>
+        <label for="items">Bingo items, separated by line:</label><br>
+        <textarea name="items"></textarea><br>
+        <label for="free-space">Include free space</label>
+        <input type="checkbox" name="free-space" checked="true"><br>
+        <!-- TODO: background color picker -->
+        <input type="submit" value="Generate">
+    </form>
+    <canvas id="card" width="450px" height="450px"></canvas>
+</body>
+</html>
