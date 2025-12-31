@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const card_w = parseInt(card.getAttribute('width'));
     const card_h = parseInt(card.getAttribute('height'));
     const card_dim = 5;
-    const sq_size = 60;
+    const sq_size = 65;
     const sq_gap = 10;
     const title_w = 20;
 
@@ -30,16 +30,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function drawSquareLabel(text, x, y) {
+        let font_size = Math.min((sq_size / 3) / (text.length / 4), sq_size / 3);
+        ctx.font = font_size + 'px Verdana';
         ctx.fillText(text, x + (sq_size / 2), y + (sq_size / 2));
     }
 
     // Render bingo squares
     function drawSquareGrid(size) {
-        ctx.font = '20px Verdana';
         let grid_w = (sq_size * size) + (sq_gap * (size - 1));
 
         let x = x_start = (card_w / 2) - (grid_w / 2);
         let y = (card_h / 2) - (grid_w / 2) + title_w;
+
+        let item_pool = items.slice();
+        let randomItem;
 
         for (let i = 0; i < size; i++) {
             x = x_start;
@@ -50,7 +54,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (i === (size - 1) / 2 && j === (size - 1) / 2 && free_space) {
                     drawSquareLabel('FREE', x, y);
                 } else {
-                    drawSquareLabel('text', x, y);
+                    if (item_pool.length === 0) {
+                        item_pool = items.slice();
+                    }
+                    randomItem = Math.floor(Math.random() * item_pool.length);
+                    drawSquareLabel(item_pool[randomItem], x, y);
+                    item_pool.splice(randomItem, 1);
                 }
                 x += sq_size + sq_gap;
             }
