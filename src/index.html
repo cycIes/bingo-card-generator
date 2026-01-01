@@ -16,10 +16,15 @@
         <textarea name="items"></textarea><br>
         <label for="free-space">Include free space</label>
         <input type="checkbox" name="free-space" checked="true"><br>
-        <!-- TODO: background color picker -->
+        <label for="background-color">Background color</label>
+        <input type="color" name="background-color" value="#ffffff"> <br>
+        <label for="square-color">Square color</label>
+        <input type="color" name="square-color" value="#888888"> <br>
+        <label for="text-color">Text color</label>
+        <input type="color" name="text-color"> <br>
         <input type="submit" value="Generate">
     </form>
-    <canvas id="card" width="450px" height="450px"></canvas>
+    <canvas id="card" width="700px" height="700px"></canvas> <br>
     <button type="button" id="download">Download</button>
 </body>
 </html>

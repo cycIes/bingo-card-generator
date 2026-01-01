@@ -5,18 +5,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const card_w = parseInt(card.getAttribute('width'));
     const card_h = parseInt(card.getAttribute('height'));
     const card_dim = 5;
-    const sq_size = 65;
+    const sq_size = 100;
     const sq_gap = 10;
-    const title_w = 20;
+    const title_w = 36;
 
     let background_color = 'white';
     let square_color = 'gray';
     let text_color = 'black';
-
-    card.style.backgroundColor = background_color;
     
     ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
 
     let bingo_title = 'Bingo Card';
     let items = ['empty']
@@ -24,13 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Render card header
     function drawHeader(text) {
-        ctx.font = '30px Verdana';
-        ctx.fillStyle = 'black';
+        ctx.font = '54px Verdana';
+        ctx.textBaseline = 'top';
+        ctx.fillStyle = text_color;
         ctx.fillText(text, card_w / 2, (title_w / 2) + 20);
     }
 
     function drawSquareLabel(text, x, y) {
-        let font_size = Math.min((sq_size / 3) / (text.length / 4), sq_size / 3);
+        ctx.textBaseline = 'middle';
+        let font_size = Math.min((sq_size / 3) / (text.length / 4.5), sq_size / 3);
         ctx.font = font_size + 'px Verdana';
         ctx.fillText(text, x + (sq_size / 2), y + (sq_size / 2));
     }
@@ -79,16 +78,32 @@ document.addEventListener('DOMContentLoaded', () => {
         items = data.get('items').split('\n');
         free_space = data.get('free-space') === 'on';
 
-        ctx.clearRect(0, 0, card_w, card_h);
+        background_color = data.get('background-color');
+        square_color = data.get('square-color');
+        text_color = data.get('text-color');
+
+        ctx.fillStyle = background_color;
+        ctx.fillRect(0, 0, card_w, card_h);
 
         if (title)
         {
             bingo_title = title;
         }
-
+        
         drawHeader(bingo_title);
         drawSquareGrid(card_dim);
     }); 
+
+    // Download card
+    const download = document.querySelector('#download');
+
+    download.addEventListener('click', () => {
+        const data = card.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = data;
+        link.download = 'bingo-card.png'
+        link.click();
+    });
 
     // Render initial card
     drawHeader(bingo_title);
